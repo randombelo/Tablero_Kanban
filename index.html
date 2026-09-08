@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TaskFlow · Tablero de tareas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ===== Menú móvil (checkbox hack, sin JS) ===== -->
+<input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+
+<header class="site-header">
+  <p class="logo">Task<span>Flow</span></p>
+
+  <label for="nav-toggle" class="hamburger" aria-label="Abrir menú de navegación">
+    <span></span><span></span><span></span>
+  </label>
+
+  <nav class="site-nav" aria-label="Navegación principal">
+    <ul>
+      <li><a href="#board">Tablero</a></li>
+      <li><a href="#stats">Estadísticas</a></li>
+      <li><a href="#">Miembros</a></li>
+      <li><a href="#">Ajustes</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ===== Panel de estadísticas rápidas ===== -->
+  <section id="stats" class="stats-bar" aria-label="Resumen del tablero">
+    <article class="stat">
+      <p class="stat-value" data-count="todo">3</p>
+      <p class="stat-label">Por hacer</p>
+    </article>
+    <article class="stat">
+      <p class="stat-value" data-count="doing">2</p>
+      <p class="stat-label">En proceso</p>
+    </article>
+    <article class="stat">
+      <p class="stat-value" data-count="done">4</p>
+      <p class="stat-label">Finalizado</p>
+    </article>
+    <article class="stat stat-total">
+      <p class="stat-value" data-count="total">9</p>
+      <p class="stat-label">Tareas totales</p>
+    </article>
+  </section>
+
+  <!-- ===== Barra de herramientas: búsqueda + nueva tarea ===== -->
+  <section class="toolbar" aria-label="Herramientas del tablero">
+    <form class="search-form" role="search">
+      <label for="search-input">Buscar tarjeta</label>
+      <input type="search" id="search-input" name="q" placeholder="Buscar por título…" autocomplete="off">
+    </form>
+    <label for="modal-toggle" class="btn btn-primary">+ Nueva tarea</label>
+  </section>
+
+  <!-- ===== Tablero Kanban ===== -->
+  <section id="board" class="board" aria-label="Tablero Kanban">
+
+    <section class="column" data-status="todo">
+      <header class="column-header">
+        <h2>Por hacer</h2>
+        <span class="count">3</span>
+      </header>
+
+      <article class="card">
+        <label for="detail-toggle" class="card-title">Diseñar wireframes del dashboard</label>
+        <p class="card-desc">Bocetar la distribución de columnas y tarjetas antes de maquetar la interfaz.</p>
+        <footer class="card-meta">
+          <span class="badge priority-alta">Alta</span>
+          <time datetime="2026-09-15">15 sep</time>
+          <span class="comment-count" title="Comentarios">💬 2</span>
+        </footer>
+      </article>
+
+      <article class="card">
+        <p class="card-title">Definir esquema de la base de datos</p>
+        <p class="card-desc">Modelar las colecciones de tareas, columnas y comentarios en json-server.</p>
+        <footer class="card-meta">
+          <span class="badge priority-media">Media</span>
+          <time datetime="2026-09-18">18 sep</time>
+          <span class="comment-count" title="Comentarios">💬 0</span>
+        </footer>
+      </article>
+
+      <article class="card">
+        <p class="card-title">Redactar textos del formulario</p>
+        <p class="card-desc">Revisar etiquetas y mensajes de ayuda del modal de creación.</p>
+        <footer class="card-meta">
+          <span class="badge priority-baja">Baja</span>
+          <time datetime="2026-09-20">20 sep</time>
+          <span class="comment-count" title="Comentarios">💬 1</span>
+        </footer>
+      </article>
+    </section>
+
+    <section class="column" data-status="doing">
+      <header class="column-header">
+        <h2>En proceso</h2>
+        <span class="count">2</span>
+      </header>
+
+      <article class="card">
+        <p class="card-title">Implementar drag &amp; drop entre columnas</p>
+        <p class="card-desc">Integrar SortableJS y disparar el PATCH al soltar la tarjeta.</p>
+        <footer class="card-meta">
+          <span class="badge priority-alta">Alta</span>
+          <time datetime="2026-09-12">12 sep</time>
+          <span class="comment-count" title="Comentarios">💬 4</span>
+        </footer>
+      </article>
+
+      <article class="card">
+        <p class="card-title">Conectar el listado GET al tablero</p>
+        <p class="card-desc">Renderizar las tarjetas según la propiedad status de cada tarea.</p>
+        <footer class="card-meta">
+          <span class="badge priority-media">Media</span>
+          <time datetime="2026-09-14">14 sep</time>
+          <span class="comment-count" title="Comentarios">💬 3</span>
+        </footer>
+      </article>
+    </section>
+
+    <section class="column" data-status="done">
+      <header class="column-header">
+        <h2>Finalizado</h2>
+        <span class="count">4</span>
+      </header>
+
+      <article class="card is-done">
+        <p class="card-title">Configurar json-server</p>
+        <p class="card-desc">Levantar el servidor local con el archivo db.json inicial.</p>
+        <footer class="card-meta">
+          <span class="badge priority-baja">Baja</span>
+          <time datetime="2026-09-05">05 sep</time>
+          <span class="comment-count" title="Comentarios">💬 1</span>
+        </footer>
+      </article>
+
+      <article class="card is-done">
+        <p class="card-title">Crear estructura de columnas fijas</p>
+        <p class="card-desc">Maquetar Por hacer, En proceso y Finalizado en el tablero.</p>
+        <footer class="card-meta">
+          <span class="badge priority-media">Media</span>
+          <time datetime="2026-09-06">06 sep</time>
+          <span class="comment-count" title="Comentarios">💬 0</span>
+        </footer>
+      </article>
+
+      <article class="card is-done">
+        <p class="card-title">Elegir paleta de color oscura</p>
+        <p class="card-desc">Definir tokens de color inspirados en GitHub Projects.</p>
+        <footer class="card-meta">
+          <span class="badge priority-baja">Baja</span>
+          <time datetime="2026-09-06">06 sep</time>
+          <span class="comment-count" title="Comentarios">💬 2</span>
+        </footer>
+      </article>
+
+      <article class="card is-done">
+        <p class="card-title">Bocetar cabecera y navegación</p>
+        <p class="card-desc">Nombre de la app, menú responsive y panel de estadísticas.</p>
+        <footer class="card-meta">
+          <span class="badge priority-baja">Baja</span>
+          <time datetime="2026-09-07">07 sep</time>
+          <span class="comment-count" title="Comentarios">💬 0</span>
+        </footer>
+      </article>
+    </section>
+
+  </section>
+</main>
+
+<!-- ===== Checkboxes de control de modales (checkbox hack, sin JS) ===== -->
+<input type="checkbox" id="modal-toggle" class="modal-toggle-input">
+<input type="checkbox" id="detail-toggle" class="modal-toggle-input">
+
+<!-- ===== Modal: nueva tarjeta ===== -->
+<section class="modal-overlay overlay-new-task" aria-label="Crear nueva tarea">
+  <article class="modal">
+    <header class="modal-header">
+      <h2>Nueva tarea</h2>
+      <label for="modal-toggle" class="modal-close" aria-label="Cerrar">✕</label>
+    </header>
+
+    <form class="modal-form">
+      <label for="task-title">Título</label>
+      <input type="text" id="task-title" name="title" placeholder="Ej. Escribir documentación de la API" required>
+
+      <label for="task-desc">Descripción</label>
+      <textarea id="task-desc" name="description" rows="3" placeholder="Añade detalles sobre la tarea…"></textarea>
+
+      <label for="task-priority">Prioridad</label>
+      <select id="task-priority" name="priority">
+        <option value="baja">Baja</option>
+        <option value="media" selected>Media</option>
+        <option value="alta">Alta</option>
+      </select>
+
+      <label for="task-due">Fecha límite</label>
+      <input type="date" id="task-due" name="dueDate">
+
+      <footer class="modal-actions">
+        <label for="modal-toggle" class="btn btn-ghost">Cancelar</label>
+        <button type="submit" class="btn btn-primary">Crear tarjeta</button>
+      </footer>
+    </form>
+  </article>
+</section>
+
+<!-- ===== Modal: detalle / edición / comentarios de una tarjeta ===== -->
+<section class="modal-overlay overlay-detail" aria-label="Detalle de la tarea">
+  <article class="modal modal-detail">
+    <header class="modal-header">
+      <h2>Editar tarea</h2>
+      <label for="detail-toggle" class="modal-close" aria-label="Cerrar">✕</label>
+    </header>
+
+    <form class="modal-form">
+      <label for="detail-title">Título</label>
+      <input type="text" id="detail-title" name="title" value="Diseñar wireframes del dashboard">
+
+      <label for="detail-desc">Descripción</label>
+      <textarea id="detail-desc" name="description" rows="3">Bocetar la distribución de columnas y tarjetas antes de maquetar la interfaz.</textarea>
+
+      <footer class="modal-actions modal-actions-split">
+        <button type="button" class="btn btn-danger">Eliminar tarea</button>
+        <span class="modal-actions-right">
+          <label for="detail-toggle" class="btn btn-ghost">Cancelar</label>
+          <button type="submit" class="btn btn-primary">Guardar cambios</button>
+        </span>
+      </footer>
+    </form>
+
+    <section class="comments" aria-label="Comentarios">
+      <h3>Comentarios</h3>
+
+      <article class="comment">
+        <p class="comment-author">Marina</p>
+        <p class="comment-text">¿Usamos los mismos colores del tablero para los wireframes?</p>
+      </article>
+
+      <article class="comment">
+        <p class="comment-author">Diego</p>
+        <p class="comment-text">Sí, mantengamos la paleta oscura desde el primer boceto.</p>
+      </article>
+
+      <form class="comment-form">
+        <label for="new-comment">Añadir comentario</label>
+        <textarea id="new-comment" rows="2" placeholder="Escribe un comentario…"></textarea>
+        <button type="submit" class="btn btn-primary">Comentar</button>
+      </form>
+    </section>
+  </article>
+</section>
+
+</body>
+</html>

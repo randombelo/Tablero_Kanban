@@ -1,0 +1,497 @@
+/* =========================================================
+   TaskFlow — Dashboard Kanban
+   Tokens: fondo casi negro azulado, acentos por estado,
+   tipografía Inter, layout plano sin sombras pesadas.
+   ========================================================= */
+
+:root {
+  --bg: #0d1117;
+  --surface: #151b23;
+  --surface-alt: #1c2430;
+  --border: #2d3543;
+  --text: #e6edf3;
+  --text-muted: #8b949e;
+
+  --accent: #4493f8;
+  --accent-strong: #316dca;
+
+  --status-todo: #6e7681;
+  --status-doing: #d29922;
+  --status-done: #3fb950;
+
+  --priority-baja: #3fb950;
+  --priority-media: #d29922;
+  --priority-alta: #f85149;
+
+  --radius: 6px;
+  --font: "Inter", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html { color-scheme: dark; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+h1, h2, h3 { margin: 0; font-weight: 600; letter-spacing: -0.01em; }
+
+ul { list-style: none; margin: 0; padding: 0; }
+
+button, input, select, textarea, label { font-family: inherit; font-size: inherit; color: inherit; }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ===================== Header & navegación ===================== */
+
+.nav-toggle-input { display: none; }
+
+.site-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.9rem 1.5rem;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.logo {
+  margin: 0;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.logo span { color: var(--accent); }
+
+.site-nav { margin-left: auto; }
+
+.site-nav ul {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.site-nav a {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.site-nav a:hover { color: var(--text); text-decoration: none; }
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  width: 28px;
+  height: 28px;
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.hamburger span {
+  display: block;
+  height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+}
+
+/* ===================== Panel de estadísticas ===================== */
+
+.stats-bar {
+  display: flex;
+  gap: 0;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.stat {
+  flex: 1;
+  padding: 0 1.5rem;
+  border-left: 1px solid var(--border);
+}
+
+.stat:first-child { border-left: none; padding-left: 0; }
+
+.stat-value {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-label {
+  margin: 0.15rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.stat-total .stat-value { color: var(--accent); }
+
+/* ===================== Barra de herramientas ===================== */
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+}
+
+.search-form {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex: 1;
+  max-width: 360px;
+}
+
+.search-form label {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.search-form input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.search-form input:hover { border-color: var(--accent); }
+
+/* ===================== Botones ===================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--accent-strong);
+  border-color: var(--accent-strong);
+  color: #fff;
+}
+
+.btn-primary:hover { background: var(--accent); }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-muted);
+}
+
+.btn-ghost:hover { color: var(--text); border-color: var(--text-muted); }
+
+.btn-danger {
+  background: transparent;
+  border-color: var(--priority-alta);
+  color: var(--priority-alta);
+}
+
+.btn-danger:hover { background: rgba(248, 81, 73, 0.1); }
+
+/* ===================== Tablero Kanban ===================== */
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(280px, 1fr));
+  gap: 1rem;
+  padding: 0 1.5rem 2rem;
+  align-items: start;
+}
+
+.column {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.column-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.25rem 0.25rem 0.75rem;
+  border-bottom: 2px solid var(--border);
+}
+
+.column[data-status="todo"] .column-header { border-bottom-color: var(--status-todo); }
+.column[data-status="doing"] .column-header { border-bottom-color: var(--status-doing); }
+.column[data-status="done"] .column-header { border-bottom-color: var(--status-done); }
+
+.column-header h2 { font-size: 0.95rem; }
+
+.count {
+  background: var(--surface-alt);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+  padding: 0.1rem 0.55rem;
+  border-radius: 999px;
+}
+
+/* ===================== Tarjetas ===================== */
+
+.card {
+  display: block;
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.75rem;
+  cursor: grab;
+}
+
+.card:hover { border-color: var(--accent); }
+
+.card.is-done { opacity: 0.75; }
+
+.card-title {
+  display: block;
+  margin: 0 0 0.35rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.card-title:hover { color: var(--accent); text-decoration: none; }
+
+.card-desc {
+  margin: 0 0 0.75rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.card-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.card-meta time { margin-right: auto; }
+
+.badge {
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.priority-baja { background: rgba(63, 185, 80, 0.15); color: var(--priority-baja); }
+.priority-media { background: rgba(210, 153, 34, 0.15); color: var(--priority-media); }
+.priority-alta { background: rgba(248, 81, 73, 0.15); color: var(--priority-alta); }
+
+/* ===================== Modales (nueva tarea / detalle) ===================== */
+
+.modal-toggle-input { display: none; }
+
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(1, 4, 9, 0.7);
+  align-items: flex-start;
+  justify-content: center;
+  padding: 4vh 1rem;
+  overflow-y: auto;
+  z-index: 50;
+}
+
+#modal-toggle:checked ~ .overlay-new-task {
+  display: flex;
+}
+
+#detail-toggle:checked ~ .overlay-detail {
+  display: flex;
+}
+
+.modal {
+  width: 100%;
+  max-width: 480px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+}
+
+.modal-detail { max-width: 560px; }
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.modal-close {
+  cursor: pointer;
+  color: var(--text-muted);
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius);
+}
+
+.modal-close:hover { color: var(--text); background: var(--surface-alt); }
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.modal-form label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+}
+
+.modal-form input,
+.modal-form select,
+.modal-form textarea {
+  padding: 0.55rem 0.7rem;
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  resize: vertical;
+}
+
+.modal-form input:focus,
+.modal-form select:focus,
+.modal-form textarea:focus {
+  border-color: var(--accent);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+.modal-actions-split { justify-content: space-between; }
+
+.modal-actions-right { display: flex; gap: 0.6rem; }
+
+/* ===================== Comentarios ===================== */
+
+.comments {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.comments h3 { font-size: 0.9rem; margin-bottom: 0.75rem; }
+
+.comment {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.comment-author {
+  margin: 0;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.comment-text {
+  margin: 0.15rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.comment-form {
+  margin-top: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.comment-form textarea {
+  padding: 0.55rem 0.7rem;
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  resize: vertical;
+}
+
+.comment-form .btn { align-self: flex-end; }
+
+/* ===================== Responsive ===================== */
+
+@media (max-width: 900px) {
+  .board {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .hamburger { display: flex; }
+
+  .site-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0.5rem 1.5rem 1rem;
+  }
+
+  .nav-toggle-input:checked ~ .site-nav { display: block; }
+
+  .site-nav ul {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .site-nav a {
+    display: block;
+    padding: 0.5rem 0;
+  }
+
+  .stats-bar {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .stat {
+    flex: 1 1 40%;
+    border-left: none;
+    padding-left: 0;
+  }
+
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-form { max-width: none; }
+}
