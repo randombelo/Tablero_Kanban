@@ -11,14 +11,14 @@
 <body>
 
 <!-- ===== Menú móvil (checkbox hack, sin JS) ===== -->
-<input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+
 
 <header class="site-header">
   <p class="logo">Task<span>Flow</span></p>
 
-  <label for="nav-toggle" class="hamburger" aria-label="Abrir menú de navegación">
+  <button class="hamburger" id="nav-toggle-btn" aria-label="Abrir menú de navegación">
     <span></span><span></span><span></span>
-  </label>
+  </button>
 
   <nav class="site-nav" aria-label="Navegación principal">
     <ul>
@@ -58,7 +58,7 @@
       <label for="search-input">Buscar tarjeta</label>
       <input type="search" id="search-input" name="q" placeholder="Buscar por título…" autocomplete="off">
     </form>
-    <label for="modal-toggle" class="btn btn-primary">+ Nueva tarea</label>
+    <button class="btn btn-primary" id="open-new-task">+ Nueva tarea</button>
   </section>
 
   <!-- ===== Tablero Kanban ===== -->
@@ -71,7 +71,7 @@
       </header>
 
       <article class="card">
-        <label for="detail-toggle" class="card-title">Diseñar wireframes del dashboard</label>
+       <p class="card-title clickable"> Diseñar wireframes del dashboard</p>
         <p class="card-desc">Bocetar la distribución de columnas y tarjetas antes de maquetar la interfaz.</p>
         <footer class="card-meta">
           <span class="badge priority-alta">Alta</span>
@@ -179,15 +179,14 @@
 </main>
 
 <!-- ===== Checkboxes de control de modales (checkbox hack, sin JS) ===== -->
-<input type="checkbox" id="modal-toggle" class="modal-toggle-input">
-<input type="checkbox" id="detail-toggle" class="modal-toggle-input">
+
 
 <!-- ===== Modal: nueva tarjeta ===== -->
 <section class="modal-overlay overlay-new-task" aria-label="Crear nueva tarea">
   <article class="modal">
     <header class="modal-header">
       <h2>Nueva tarea</h2>
-      <label for="modal-toggle" class="modal-close" aria-label="Cerrar">✕</label>
+      <button class="modal-close" id="close-new-task" aria-label="Cerrar">✕</button>
     </header>
 
     <form class="modal-form">
@@ -208,7 +207,7 @@
       <input type="date" id="task-due" name="dueDate">
 
       <footer class="modal-actions">
-        <label for="modal-toggle" class="btn btn-ghost">Cancelar</label>
+         <button class="btn btn-ghost" id="cancel-new-task">Cancelar</button>
         <button type="submit" class="btn btn-primary">Crear tarjeta</button>
       </footer>
     </form>
@@ -220,7 +219,7 @@
   <article class="modal modal-detail">
     <header class="modal-header">
       <h2>Editar tarea</h2>
-      <label for="detail-toggle" class="modal-close" aria-label="Cerrar">✕</label>
+      <button class="modal-close" id="close-detail" aria-label="Cerrar">✕</button>
     </header>
 
     <form class="modal-form">
@@ -233,7 +232,7 @@
       <footer class="modal-actions modal-actions-split">
         <button type="button" class="btn btn-danger">Eliminar tarea</button>
         <span class="modal-actions-right">
-          <label for="detail-toggle" class="btn btn-ghost">Cancelar</label>
+          <button class="btn btn-ghost" id="cancel-detail">Cancelar</button>
           <button type="submit" class="btn btn-primary">Guardar cambios</button>
         </span>
       </footer>
@@ -260,6 +259,6 @@
     </section>
   </article>
 </section>
-
+ <script src="app.js"></script>
 </body>
 </html>

@@ -57,7 +57,7 @@ button, input, select, textarea, label { font-family: inherit; font-size: inheri
 
 /* ===================== Header & navegación ===================== */
 
-.nav-toggle-input { display: none; }
+
 
 .site-header {
   display: flex;
@@ -102,6 +102,9 @@ button, input, select, textarea, label { font-family: inherit; font-size: inheri
   height: 28px;
   margin-left: auto;
   cursor: pointer;
+  background: none; 
+  border: none; 
+  padding: 0; 
 }
 
 .hamburger span {
@@ -311,7 +314,7 @@ button, input, select, textarea, label { font-family: inherit; font-size: inheri
 
 /* ===================== Modales (nueva tarea / detalle) ===================== */
 
-.modal-toggle-input { display: none; }
+
 
 .modal-overlay {
   display: none;
@@ -325,14 +328,10 @@ button, input, select, textarea, label { font-family: inherit; font-size: inheri
   z-index: 50;
 }
 
-#modal-toggle:checked ~ .overlay-new-task {
-  display: flex;
-}
+.overlay-new-task.is-open { display: flex; }
 
-#detail-toggle:checked ~ .overlay-detail {
-  display: flex;
-}
-
+ .overlay-detail.is-open { display: flex; }
+ .card-title.clickable { cursor: pointer; }
 .modal {
   width: 100%;
   max-width: 480px;
@@ -465,7 +464,7 @@ button, input, select, textarea, label { font-family: inherit; font-size: inheri
     padding: 0.5rem 1.5rem 1rem;
   }
 
-  .nav-toggle-input:checked ~ .site-nav { display: block; }
+  .site-nav.is-open { display: block; } 
 
   .site-nav ul {
     flex-direction: column;
