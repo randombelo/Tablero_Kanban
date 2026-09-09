@@ -195,6 +195,17 @@ document.querySelector('.board').addEventListener('click', (e) => {
   currentTaskId = card.dataset.id; 
   openDetailModal(title.textContent, card.querySelector('.card-desc').textContent);
 });
+//Listener para guardar cambios de una edicion.
+document.getElementById('detail-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if (!currentTaskId) return;
+  await axios.patch(`${API_BASE}/tasks/${currentTaskId}`, {
+    title: detailTitle.value.trim(),
+    description: detailDesc.value.trim()
+  });
+  closeDetailModal();
+  fetchAndRender();
+});
 
 // ===== Inicio =====
 document.addEventListener('DOMContentLoaded', fetchAndRender);
