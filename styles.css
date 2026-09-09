@@ -503,3 +503,5 @@ button, input, select, textarea, label { font-family: inherit; font-size: inheri
   gap: 0.5rem;
   min-height: 2rem;
 }
+.card.sortable-ghost { opacity: 0.4; }
+.card.sortable-chosen { box-shadow: 0 0 0 2px var(--accent); }

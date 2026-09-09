@@ -142,6 +142,27 @@ function renderBoard(tasks) {
     tasks.filter(t => t.status === status).forEach(t => list.appendChild(renderCard(t)));
   });
   updateCounts(tasks);
+  initSortable(); 
+}
+function initSortable() {
+  document.querySelectorAll('.card-list').forEach(list => {
+    if (list._sortable) list._sortable.destroy();
+    list._sortable = new Sortable(list, {
+      group: 'board',
+      animation: 150,
+      ghostClass: 'sortable-ghost',
+      chosenClass: 'sortable-chosen',
+      onEnd: async (evt) => {
+        const cardId = evt.item.dataset.id;
+        const newStatus = evt.to.closest('.column').dataset.status;
+        await axios.patch(`${API_BASE}/tasks/${cardId}`, { status: newStatus });
+        document.querySelectorAll('.column').forEach(col => {
+          const count = col.querySelector('.card-list').children.length;
+          col.querySelector('.count').textContent = count;
+        });
+      }
+    });
+  });
 }
 
 async function fetchAndRender() {
