@@ -497,3 +497,9 @@ button, input, select, textarea, label { font-family: inherit; font-size: inheri
 
   .search-form { max-width: none; }
 }
+.card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-height: 2rem;
+}

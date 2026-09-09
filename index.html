@@ -69,36 +69,7 @@
         <h2>Por hacer</h2>
         <span class="count">3</span>
       </header>
-
-      <article class="card">
-       <p class="card-title clickable"> Diseñar wireframes del dashboard</p>
-        <p class="card-desc">Bocetar la distribución de columnas y tarjetas antes de maquetar la interfaz.</p>
-        <footer class="card-meta">
-          <span class="badge priority-alta">Alta</span>
-          <time datetime="2026-09-15">15 sep</time>
-          <span class="comment-count" title="Comentarios">💬 2</span>
-        </footer>
-      </article>
-
-      <article class="card">
-        <p class="card-title clickable">Definir esquema de la base de datos</p>
-        <p class="card-desc">Modelar las colecciones de tareas, columnas y comentarios en json-server.</p>
-        <footer class="card-meta">
-          <span class="badge priority-media">Media</span>
-          <time datetime="2026-09-18">18 sep</time>
-          <span class="comment-count" title="Comentarios">💬 0</span>
-        </footer>
-      </article>
-
-      <article class="card">
-        <p class="card-title clickable">Redactar textos del formulario</p>
-        <p class="card-desc">Revisar etiquetas y mensajes de ayuda del modal de creación.</p>
-        <footer class="card-meta">
-          <span class="badge priority-baja">Baja</span>
-          <time datetime="2026-09-20">20 sep</time>
-          <span class="comment-count" title="Comentarios">💬 1</span>
-        </footer>
-      </article>
+      <div class="card-list"></div>
     </section>
 
     <section class="column" data-status="doing">
@@ -106,26 +77,7 @@
         <h2>En proceso</h2>
         <span class="count">2</span>
       </header>
-
-      <article class="card">
-        <p class="card-title clickable">Implementar drag &amp; drop entre columnas</p>
-        <p class="card-desc">Integrar SortableJS y disparar el PATCH al soltar la tarjeta.</p>
-        <footer class="card-meta">
-          <span class="badge priority-alta">Alta</span>
-          <time datetime="2026-09-12">12 sep</time>
-          <span class="comment-count" title="Comentarios">💬 4</span>
-        </footer>
-      </article>
-
-      <article class="card">
-        <p class="card-title clickable">Conectar el listado GET al tablero</p>
-        <p class="card-desc">Renderizar las tarjetas según la propiedad status de cada tarea.</p>
-        <footer class="card-meta">
-          <span class="badge priority-media">Media</span>
-          <time datetime="2026-09-14">14 sep</time>
-          <span class="comment-count" title="Comentarios">💬 3</span>
-        </footer>
-      </article>
+      <div class="card-list"></div>
     </section>
 
     <section class="column" data-status="done">
@@ -133,46 +85,7 @@
         <h2>Finalizado</h2>
         <span class="count">4</span>
       </header>
-
-      <article class="card is-done">
-        <p class="card-title clickable">Configurar json-server</p>
-        <p class="card-desc">Levantar el servidor local con el archivo db.json inicial.</p>
-        <footer class="card-meta">
-          <span class="badge priority-baja">Baja</span>
-          <time datetime="2026-09-05">05 sep</time>
-          <span class="comment-count" title="Comentarios">💬 1</span>
-        </footer>
-      </article>
-
-      <article class="card is-done">
-        <p class="card-title clickable">Crear estructura de columnas fijas</p>
-        <p class="card-desc">Maquetar Por hacer, En proceso y Finalizado en el tablero.</p>
-        <footer class="card-meta">
-          <span class="badge priority-media">Media</span>
-          <time datetime="2026-09-06">06 sep</time>
-          <span class="comment-count" title="Comentarios">💬 0</span>
-        </footer>
-      </article>
-
-      <article class="card is-done">
-        <p class="card-title clickable">Elegir paleta de color oscura</p>
-        <p class="card-desc">Definir tokens de color inspirados en GitHub Projects.</p>
-        <footer class="card-meta">
-          <span class="badge priority-baja">Baja</span>
-          <time datetime="2026-09-06">06 sep</time>
-          <span class="comment-count" title="Comentarios">💬 2</span>
-        </footer>
-      </article>
-
-      <article class="card is-done">
-        <p class="card-title clickable">Bocetar cabecera y navegación</p>
-        <p class="card-desc">Nombre de la app, menú responsive y panel de estadísticas.</p>
-        <footer class="card-meta">
-          <span class="badge priority-baja">Baja</span>
-          <time datetime="2026-09-07">07 sep</time>
-          <span class="comment-count" title="Comentarios">💬 0</span>
-        </footer>
-      </article>
+      <div class="card-list"></div>      
     </section>
 
   </section>
@@ -277,6 +190,7 @@
     </footer>
   </article>
 </section>
+ <script src="https://cdn.jsdelivr.net/npm/axios@1.7.7/dist/axios.min.js"></script>
  <script src="app.js"></script>
 </body>
 </html>

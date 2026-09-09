@@ -46,17 +46,6 @@ function closeDetailModal() {
   detailOverlay.classList.remove('is-open');
 }
 
-let currentCard = null;
-
-document.querySelectorAll('.card-title.clickable').forEach((cardTitle) => {
-  cardTitle.addEventListener('click', () => {
-    const card = cardTitle.closest('.card');
-    currentCard = card;
-    const desc = card.querySelector('.card-desc').textContent;
-    openDetailModal(cardTitle.textContent, desc);
-  });
-});
-
 closeDetailBtn.addEventListener('click', closeDetailModal);
 cancelDetailBtn.addEventListener('click', closeDetailModal);
 
@@ -104,3 +93,69 @@ deleteOverlay.addEventListener('click', (e) => {
     cancelDeletion();
   }
 });
+// ===== API con axios =====
+const API_BASE = 'http://localhost:3000';
+
+// ===== Render del tablero =====
+function formatDate(dateStr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr + 'T00:00:00');
+  const months = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  return `${String(d.getDate()).padStart(2,'0')} ${months[d.getMonth()]}`;
+}
+
+function renderCard(task) {
+  const done = task.status === 'done';
+  const priorityLabel = { alta: 'Alta', media: 'Media', baja: 'Baja' };
+  const article = document.createElement('article');
+  article.className = `card${done ? ' is-done' : ''}`;
+  article.dataset.id = task.id;
+  article.innerHTML = `
+    <p class="card-title clickable">${task.title}</p>
+    <p class="card-desc">${task.description}</p>
+    <footer class="card-meta">
+      <span class="badge priority-${task.priority}">${priorityLabel[task.priority]}</span>
+      <time datetime="${task.dueDate}">${formatDate(task.dueDate)}</time>
+      <span class="comment-count" title="Comentarios">💬 0</span>
+    </footer>`;
+  return article;
+}
+
+function updateCounts(tasks) {
+  const counts = { todo: 0, doing: 0, done: 0 };
+  tasks.forEach(t => counts[t.status]++);
+  document.querySelectorAll('.column').forEach(col => {
+    const s = col.dataset.status;
+    col.querySelector('.count').textContent = counts[s];
+  });
+  document.querySelector('[data-count="todo"]').textContent = counts.todo;
+  document.querySelector('[data-count="doing"]').textContent = counts.doing;
+  document.querySelector('[data-count="done"]').textContent = counts.done;
+  document.querySelector('[data-count="total"]').textContent = tasks.length;
+}
+
+function renderBoard(tasks) {
+  document.querySelectorAll('.column').forEach(col => {
+    const status = col.dataset.status;
+    const list = col.querySelector('.card-list');
+    list.innerHTML = '';
+    tasks.filter(t => t.status === status).forEach(t => list.appendChild(renderCard(t)));
+  });
+  updateCounts(tasks);
+}
+
+async function fetchAndRender() {
+  const { data: tasks } = await axios.get(`${API_BASE}/tasks`);
+  renderBoard(tasks);
+}
+
+// ===== Modal de detalle (delegación de eventos) =====
+document.querySelector('.board').addEventListener('click', (e) => {
+  const title = e.target.closest('.card-title.clickable');
+  if (!title) return;
+  const card = title.closest('.card');
+  openDetailModal(title.textContent, card.querySelector('.card-desc').textContent);
+});
+
+// ===== Inicio =====
+document.addEventListener('DOMContentLoaded', fetchAndRender);
