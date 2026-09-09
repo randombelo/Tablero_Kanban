@@ -97,6 +97,7 @@ deleteOverlay.addEventListener('click', (e) => {
 const API_BASE = 'http://localhost:3000';
 
 // ===== Render del tablero =====
+let currentTaskId = null;
 function formatDate(dateStr) {
   if (!dateStr) return '';
   const d = new Date(dateStr + 'T00:00:00');
@@ -169,12 +170,29 @@ async function fetchAndRender() {
   const { data: tasks } = await axios.get(`${API_BASE}/tasks`);
   renderBoard(tasks);
 }
+//funcion para crear tarjetas nuevas
+document.getElementById('new-task-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const nueva = {
+    title: document.getElementById('task-title').value.trim(),
+    description: document.getElementById('task-desc').value.trim(),
+    priority: document.getElementById('task-priority').value,
+    dueDate: document.getElementById('task-due').value || null,
+    status: 'todo'
+  };
+  if (!nueva.title) return;
+  await axios.post(`${API_BASE}/tasks`, nueva);
+  e.target.reset();
+  closeNewTaskModal();
+  fetchAndRender();
+});
 
 // ===== Modal de detalle (delegación de eventos) =====
 document.querySelector('.board').addEventListener('click', (e) => {
   const title = e.target.closest('.card-title.clickable');
   if (!title) return;
   const card = title.closest('.card');
+  currentTaskId = card.dataset.id; 
   openDetailModal(title.textContent, card.querySelector('.card-desc').textContent);
 });
 

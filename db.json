@@ -4,7 +4,7 @@
       "id": 1,
       "title": "Diseñar wireframes del dashboard",
       "description": "Bocetar la distribución de columnas y tarjetas antes de maquetar la interfaz.",
-      "status": "doing",
+      "status": "done",
       "priority": "alta",
       "dueDate": "2026-09-15"
     },
@@ -12,7 +12,7 @@
       "id": 2,
       "title": "Definir esquema de la base de datos",
       "description": "Modelar las colecciones de tareas, columnas y comentarios en json-server.",
-      "status": "doing",
+      "status": "todo",
       "priority": "media",
       "dueDate": "2026-09-18"
     },
@@ -28,7 +28,7 @@
       "id": 4,
       "title": "Implementar drag & drop entre columnas",
       "description": "Integrar SortableJS y disparar el PATCH al soltar la tarjeta.",
-      "status": "doing",
+      "status": "done",
       "priority": "alta",
       "dueDate": "2026-09-12"
     },
@@ -36,7 +36,7 @@
       "id": 5,
       "title": "Conectar el listado GET al tablero",
       "description": "Renderizar las tarjetas según la propiedad status de cada tarea.",
-      "status": "doing",
+      "status": "todo",
       "priority": "media",
       "dueDate": "2026-09-14"
     },
@@ -68,9 +68,17 @@
       "id": 9,
       "title": "Bocetar cabecera y navegación",
       "description": "Nombre de la app, menú responsive y panel de estadísticas.",
-      "status": "doing",
+      "status": "todo",
       "priority": "baja",
       "dueDate": "2026-09-07"
+    },
+    {
+      "title": "titulo de prueba",
+      "description": "descripcion de prueba",
+      "priority": "alta",
+      "dueDate": "2026-09-05",
+      "status": "done",
+      "id": 10
     }
   ]
 }
