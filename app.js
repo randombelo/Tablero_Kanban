@@ -84,8 +84,12 @@ deleteTaskBtn.addEventListener('click', () => {
 cancelDeleteBtn.addEventListener('click', cancelDeletion);
 closeDeleteBtn.addEventListener('click', cancelDeletion);
 
-confirmDeleteBtn.addEventListener('click', () => {
+confirmDeleteBtn.addEventListener('click', async () => {
+  if (!currentTaskId) return;
+  await axios.delete(`${API_BASE}/tasks/${currentTaskId}`);
   closeDeleteModal();
+  currentTaskId = null;
+  fetchAndRender();
 });
 
 deleteOverlay.addEventListener('click', (e) => {

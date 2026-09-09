@@ -71,22 +71,6 @@
       "status": "todo",
       "priority": "baja",
       "dueDate": "2026-09-07"
-    },
-    {
-      "title": "titulo de prueba editado",
-      "description": "descripcion de prueba editado",
-      "priority": "alta",
-      "dueDate": "2026-09-05",
-      "status": "todo",
-      "id": 10
-    },
-    {
-      "title": "titulo de prueba 2 editado",
-      "description": "descripcion de prueba 2 editado",
-      "priority": "baja",
-      "dueDate": "2026-10-01",
-      "status": "todo",
-      "id": 11
     }
   ]
 }
