@@ -46,9 +46,12 @@ function closeDetailModal() {
   detailOverlay.classList.remove('is-open');
 }
 
+let currentCard = null;
+
 document.querySelectorAll('.card-title.clickable').forEach((cardTitle) => {
   cardTitle.addEventListener('click', () => {
     const card = cardTitle.closest('.card');
+    currentCard = card;
     const desc = card.querySelector('.card-desc').textContent;
     openDetailModal(cardTitle.textContent, desc);
   });
@@ -60,5 +63,44 @@ cancelDetailBtn.addEventListener('click', closeDetailModal);
 detailOverlay.addEventListener('click', (e) => {
   if (e.target === detailOverlay) {
     closeDetailModal();
+  }
+});
+// --- Modal: confirmar eliminación ---
+const deleteTaskBtn = document.getElementById('delete-task-btn');
+const deleteOverlay = document.querySelector('.overlay-delete');
+const closeDeleteBtn = document.getElementById('close-delete');
+const cancelDeleteBtn = document.getElementById('cancel-delete');
+const confirmDeleteBtn = document.getElementById('confirm-delete');
+const deleteTaskTitle = document.getElementById('delete-task-title');
+
+function openDeleteModal() {
+  deleteTaskTitle.textContent = detailTitle.value;
+  deleteOverlay.classList.add('is-open');
+}
+
+function closeDeleteModal() {
+  deleteOverlay.classList.remove('is-open');
+}
+
+function cancelDeletion() {
+  closeDeleteModal();
+  openDetailModal(detailTitle.value, detailDesc.value);
+}
+
+deleteTaskBtn.addEventListener('click', () => {
+  closeDetailModal();
+  openDeleteModal();
+});
+
+cancelDeleteBtn.addEventListener('click', cancelDeletion);
+closeDeleteBtn.addEventListener('click', cancelDeletion);
+
+confirmDeleteBtn.addEventListener('click', () => {
+  closeDeleteModal();
+});
+
+deleteOverlay.addEventListener('click', (e) => {
+  if (e.target === deleteOverlay) {
+    cancelDeletion();
   }
 });

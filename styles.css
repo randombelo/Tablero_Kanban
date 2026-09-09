@@ -331,6 +331,7 @@ button, input, select, textarea, label { font-family: inherit; font-size: inheri
 .overlay-new-task.is-open { display: flex; }
 
  .overlay-detail.is-open { display: flex; }
+ .overlay-delete.is-open { display: flex; }
  .card-title.clickable { cursor: pointer; }
 .modal {
   width: 100%;
@@ -342,7 +343,9 @@ button, input, select, textarea, label { font-family: inherit; font-size: inheri
 }
 
 .modal-detail { max-width: 560px; }
-
+.modal-delete { max-width: 420px; }
+.delete-text { color: var(--text-muted); line-height: 1.5; }
+.delete-text strong { color: var(--text); }
 .modal-header {
   display: flex;
   align-items: center;

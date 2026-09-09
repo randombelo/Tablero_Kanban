@@ -81,7 +81,7 @@
       </article>
 
       <article class="card">
-        <p class="card-title">Definir esquema de la base de datos</p>
+        <p class="card-title clickable">Definir esquema de la base de datos</p>
         <p class="card-desc">Modelar las colecciones de tareas, columnas y comentarios en json-server.</p>
         <footer class="card-meta">
           <span class="badge priority-media">Media</span>
@@ -91,7 +91,7 @@
       </article>
 
       <article class="card">
-        <p class="card-title">Redactar textos del formulario</p>
+        <p class="card-title clickable">Redactar textos del formulario</p>
         <p class="card-desc">Revisar etiquetas y mensajes de ayuda del modal de creación.</p>
         <footer class="card-meta">
           <span class="badge priority-baja">Baja</span>
@@ -108,7 +108,7 @@
       </header>
 
       <article class="card">
-        <p class="card-title">Implementar drag &amp; drop entre columnas</p>
+        <p class="card-title clickable">Implementar drag &amp; drop entre columnas</p>
         <p class="card-desc">Integrar SortableJS y disparar el PATCH al soltar la tarjeta.</p>
         <footer class="card-meta">
           <span class="badge priority-alta">Alta</span>
@@ -118,7 +118,7 @@
       </article>
 
       <article class="card">
-        <p class="card-title">Conectar el listado GET al tablero</p>
+        <p class="card-title clickable">Conectar el listado GET al tablero</p>
         <p class="card-desc">Renderizar las tarjetas según la propiedad status de cada tarea.</p>
         <footer class="card-meta">
           <span class="badge priority-media">Media</span>
@@ -135,7 +135,7 @@
       </header>
 
       <article class="card is-done">
-        <p class="card-title">Configurar json-server</p>
+        <p class="card-title clickable">Configurar json-server</p>
         <p class="card-desc">Levantar el servidor local con el archivo db.json inicial.</p>
         <footer class="card-meta">
           <span class="badge priority-baja">Baja</span>
@@ -145,7 +145,7 @@
       </article>
 
       <article class="card is-done">
-        <p class="card-title">Crear estructura de columnas fijas</p>
+        <p class="card-title clickable">Crear estructura de columnas fijas</p>
         <p class="card-desc">Maquetar Por hacer, En proceso y Finalizado en el tablero.</p>
         <footer class="card-meta">
           <span class="badge priority-media">Media</span>
@@ -155,7 +155,7 @@
       </article>
 
       <article class="card is-done">
-        <p class="card-title">Elegir paleta de color oscura</p>
+        <p class="card-title clickable">Elegir paleta de color oscura</p>
         <p class="card-desc">Definir tokens de color inspirados en GitHub Projects.</p>
         <footer class="card-meta">
           <span class="badge priority-baja">Baja</span>
@@ -165,7 +165,7 @@
       </article>
 
       <article class="card is-done">
-        <p class="card-title">Bocetar cabecera y navegación</p>
+        <p class="card-title clickable">Bocetar cabecera y navegación</p>
         <p class="card-desc">Nombre de la app, menú responsive y panel de estadísticas.</p>
         <footer class="card-meta">
           <span class="badge priority-baja">Baja</span>
@@ -230,7 +230,7 @@
       <textarea id="detail-desc" name="description" rows="3">Bocetar la distribución de columnas y tarjetas antes de maquetar la interfaz.</textarea>
 
       <footer class="modal-actions modal-actions-split">
-        <button type="button" class="btn btn-danger">Eliminar tarea</button>
+        <button type="button" class="btn btn-danger" id="delete-task-btn">Eliminar tarea</button>
         <span class="modal-actions-right">
           <button class="btn btn-ghost" id="cancel-detail">Cancelar</button>
           <button type="submit" class="btn btn-primary">Guardar cambios</button>
@@ -257,6 +257,24 @@
         <button type="submit" class="btn btn-primary">Comentar</button>
       </form>
     </section>
+  </article>
+</section>
+
+<section class="modal-overlay overlay-delete" aria-label="Confirmar eliminación">
+  <article class="modal modal-delete">
+    <header class="modal-header">
+      <h2>Eliminar tarea</h2>
+      <button class="modal-close" id="close-delete" aria-label="Cerrar">✕</button>
+    </header>
+
+    <p class="delete-text">
+      ¿Seguro que quieres eliminar la tarea <strong id="delete-task-title"></strong>?
+    </p>
+
+    <footer class="modal-actions modal-actions-split">
+      <button class="btn btn-ghost" id="cancel-delete">Cancelar</button>
+      <button class="btn btn-danger" id="confirm-delete">Eliminar</button>
+    </footer>
   </article>
 </section>
  <script src="app.js"></script>
