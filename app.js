@@ -83,15 +83,17 @@ deleteTaskBtn.addEventListener('click', () => {
 
 cancelDeleteBtn.addEventListener('click', cancelDeletion);
 closeDeleteBtn.addEventListener('click', cancelDeletion);
-
+//listener para confirmar una eliminacion
 confirmDeleteBtn.addEventListener('click', async () => {
   if (!currentTaskId) return;
   await axios.delete(`${API_BASE}/tasks/${currentTaskId}`);
   closeDeleteModal();
+  const card = document.querySelector(`.card[data-id="${currentTaskId}"]`);
+  if (card) card.remove();
   currentTaskId = null;
-  fetchAndRender();
+  refreshCounts();
 });
-
+//listener del boton cancel deletion
 deleteOverlay.addEventListener('click', (e) => {
   if (e.target === deleteOverlay) {
     cancelDeletion();
@@ -149,24 +151,36 @@ function renderBoard(tasks) {
   updateCounts(tasks);
   initSortable(); 
 }
+//Refresca los contadores
+function refreshCounts() {
+  let total = 0;
+  document.querySelectorAll('.column').forEach(col => {
+    const status = col.dataset.status;
+    const count = col.querySelector('.card-list').children.length;
+    total += count;
+    col.querySelector('.count').textContent = count;                    // contador de columna
+    document.querySelector(`[data-count="${status}"]`).textContent = count;  // contador de stats
+  });
+  document.querySelector('[data-count="total"]').textContent = total;
+}
+//hace arrastable todas las columnas
 function initSortable() {
-  document.querySelectorAll('.card-list').forEach(list => {
-    if (list._sortable) list._sortable.destroy();
-    list._sortable = new Sortable(list, {
-      group: 'board',
-      animation: 150,
-      ghostClass: 'sortable-ghost',
-      chosenClass: 'sortable-chosen',
-      onEnd: async (evt) => {
-        const cardId = evt.item.dataset.id;
-        const newStatus = evt.to.closest('.column').dataset.status;
-        await axios.patch(`${API_BASE}/tasks/${cardId}`, { status: newStatus });
-        document.querySelectorAll('.column').forEach(col => {
-          const count = col.querySelector('.card-list').children.length;
-          col.querySelector('.count').textContent = count;
-        });
-      }
-    });
+  document.querySelectorAll('.card-list').forEach(makeSortable)
+}
+//Funcion que hace arrastablle cierta columna 
+function makeSortable(list) {
+  if (list._sortable) list._sortable.destroy();
+  list._sortable = new Sortable(list, {
+    group: 'board',
+    animation: 150,
+    ghostClass: 'sortable-ghost',
+    chosenClass: 'sortable-chosen',
+    onEnd: async (evt) => {
+      const cardId = evt.item.dataset.id;
+      const newStatus = evt.to.closest('.column').dataset.status;
+      await axios.patch(`${API_BASE}/tasks/${cardId}`, { status: newStatus });
+      refreshCounts();
+    }
   });
 }
 
@@ -185,10 +199,13 @@ document.getElementById('new-task-form').addEventListener('submit', async (e) =>
     status: 'todo'
   };
   if (!nueva.title) return;
-  await axios.post(`${API_BASE}/tasks`, nueva);
+  const { data: taskCreada } = await axios.post(`${API_BASE}/tasks`, nueva);
   e.target.reset();
   closeNewTaskModal();
-  fetchAndRender();
+  const todoList = document.querySelector('[data-status="todo"] .card-list');
+  todoList.appendChild(renderCard(taskCreada));
+  makeSortable(todoList);
+  refreshCounts();
 });
 
 // ===== Modal de detalle (delegación de eventos) =====
@@ -202,14 +219,23 @@ document.querySelector('.board').addEventListener('click', (e) => {
 //Listener para guardar cambios de una edicion.
 document.getElementById('detail-form').addEventListener('submit', async (e) => {
   e.preventDefault();
+  const nuevoTitle = detailTitle.value.trim();
+  const nuevoDesc = detailDesc.value.trim();
+
   if (!currentTaskId) return;
   await axios.patch(`${API_BASE}/tasks/${currentTaskId}`, {
-    title: detailTitle.value.trim(),
-    description: detailDesc.value.trim()
+    title: nuevoTitle,
+    description: nuevoDesc
   });
   closeDetailModal();
-  fetchAndRender();
+   const card = document.querySelector(`.card[data-id="${currentTaskId}"]`);
+  if (card) {
+    card.querySelector('.card-title').textContent = nuevoTitle;
+    card.querySelector('.card-desc').textContent = nuevoDesc;
+  }
 });
 
 // ===== Inicio =====
 document.addEventListener('DOMContentLoaded', fetchAndRender);
+//Evita refresh por la barra de busqueda 
+document.getElementById('search-form').addEventListener('submit', (e) => e.preventDefault());

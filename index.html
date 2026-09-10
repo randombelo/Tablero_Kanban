@@ -54,7 +54,7 @@
 
   <!-- ===== Barra de herramientas: búsqueda + nueva tarea ===== -->
   <section class="toolbar" aria-label="Herramientas del tablero">
-    <form class="search-form" role="search">
+    <form class="search-form" role="search" id="search-form">
       <label for="search-input">Buscar tarjeta</label>
       <input type="search" id="search-input" name="q" placeholder="Buscar por título…" autocomplete="off">
     </form>
@@ -120,7 +120,7 @@
       <input type="date" id="task-due" name="dueDate">
 
       <footer class="modal-actions">
-         <button class="btn btn-ghost" id="cancel-new-task">Cancelar</button>
+         <button  type="button" class="btn btn-ghost" id="cancel-new-task">Cancelar</button>
         <button type="submit" class="btn btn-primary">Crear tarjeta</button>
       </footer>
     </form>
@@ -145,7 +145,7 @@
       <footer class="modal-actions modal-actions-split">
         <button type="button" class="btn btn-danger" id="delete-task-btn">Eliminar tarea</button>
         <span class="modal-actions-right">
-          <button class="btn btn-ghost" id="cancel-detail">Cancelar</button>
+          <button  type="button" class="btn btn-ghost" id="cancel-detail">Cancelar</button>
           <button type="submit" class="btn btn-primary">Guardar cambios</button>
         </span>
       </footer>

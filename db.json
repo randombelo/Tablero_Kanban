@@ -4,7 +4,7 @@
       "id": 1,
       "title": "Diseñar wireframes del dashboard",
       "description": "Bocetar la distribución de columnas y tarjetas antes de maquetar la interfaz.",
-      "status": "done",
+      "status": "todo",
       "priority": "alta",
       "dueDate": "2026-09-15"
     },
@@ -12,65 +12,33 @@
       "id": 2,
       "title": "Definir esquema de la base de datos",
       "description": "Modelar las colecciones de tareas, columnas y comentarios en json-server.",
-      "status": "todo",
+      "status": "done",
       "priority": "media",
       "dueDate": "2026-09-18"
-    },
-    {
-      "id": 3,
-      "title": "Redactar textos del formulario",
-      "description": "Revisar etiquetas y mensajes de ayuda del modal de creación.",
-      "status": "todo",
-      "priority": "baja",
-      "dueDate": "2026-09-20"
     },
     {
       "id": 4,
       "title": "Implementar drag & drop entre columnas",
       "description": "Integrar SortableJS y disparar el PATCH al soltar la tarjeta.",
-      "status": "done",
+      "status": "doing",
       "priority": "alta",
       "dueDate": "2026-09-12"
-    },
-    {
-      "id": 5,
-      "title": "Conectar el listado GET al tablero",
-      "description": "Renderizar las tarjetas según la propiedad status de cada tarea.",
-      "status": "todo",
-      "priority": "media",
-      "dueDate": "2026-09-14"
     },
     {
       "id": 6,
       "title": "Configurar json-server",
       "description": "Levantar el servidor local con el archivo db.json inicial.",
-      "status": "doing",
+      "status": "done",
       "priority": "baja",
       "dueDate": "2026-09-05"
-    },
-    {
-      "id": 7,
-      "title": "Crear estructura de columnas fijas",
-      "description": "Maquetar Por hacer, En proceso y Finalizado en el tablero.",
-      "status": "doing",
-      "priority": "media",
-      "dueDate": "2026-09-06"
     },
     {
       "id": 8,
       "title": "Elegir paleta de color oscura",
       "description": "Definir tokens de color inspirados en GitHub Projects.",
-      "status": "done",
+      "status": "doing",
       "priority": "baja",
       "dueDate": "2026-09-06"
-    },
-    {
-      "id": 9,
-      "title": "Bocetar cabecera y navegación",
-      "description": "Nombre de la app, menú responsive y panel de estadísticas.",
-      "status": "todo",
-      "priority": "baja",
-      "dueDate": "2026-09-07"
     }
   ]
 }
