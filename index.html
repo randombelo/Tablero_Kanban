@@ -153,26 +153,16 @@
 
     <section class="comments" aria-label="Comentarios">
       <h3>Comentarios</h3>
-
-      <article class="comment">
-        <p class="comment-author">Marina</p>
-        <p class="comment-text">¿Usamos los mismos colores del tablero para los wireframes?</p>
-      </article>
-
-      <article class="comment">
-        <p class="comment-author">Diego</p>
-        <p class="comment-text">Sí, mantengamos la paleta oscura desde el primer boceto.</p>
-      </article>
-
-      <form class="comment-form">
-        <label for="new-comment">Añadir comentario</label>
+      <div id="comment-list" class="comment-list"></div>
+      <form class="comment-form" id="comment-form">
+        <label for="new-comment">Añadir comentario · como Abel</label>
         <textarea id="new-comment" rows="2" placeholder="Escribe un comentario…"></textarea>
         <button type="submit" class="btn btn-primary">Comentar</button>
       </form>
     </section>
   </article>
 </section>
-
+//Modal de confirmacion de eliminacion de tarea
 <section class="modal-overlay overlay-delete" aria-label="Confirmar eliminación">
   <article class="modal modal-delete">
     <header class="modal-header">
@@ -187,6 +177,21 @@
     <footer class="modal-actions modal-actions-split">
       <button class="btn btn-ghost" id="cancel-delete">Cancelar</button>
       <button class="btn btn-danger" id="confirm-delete">Eliminar</button>
+    </footer>
+  </article>
+</section>
+//Modal de confirmacion de eliminacion de comentario
+<section class="modal-overlay overlay-comment-delete" aria-label="Confirmar eliminación de comentario">
+  <article class="modal modal-delete">
+    <header class="modal-header">
+      <h2>Eliminar comentario</h2>
+      <button class="modal-close" id="close-comment-delete" aria-label="Cerrar">✕</button>
+    </header>
+    <p class="delete-text">¿Seguro que quieres eliminar este comentario de <strong id="comment-delete-author"></strong>?
+    </p>
+    <footer class="modal-actions modal-actions-split">
+      <button type="button" class="btn btn-ghost" id="cancel-comment-delete">Cancelar</button>
+      <button type="button" class="btn btn-danger" id="confirm-comment-delete">Eliminar</button>
     </footer>
   </article>
 </section>
