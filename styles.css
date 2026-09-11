@@ -162,7 +162,19 @@ button, input, select, textarea, label { font-family: inherit; font-size: inheri
   gap: 0.6rem;
   flex: 1;
   max-width: 360px;
+  position: relative; 
 }
+.search-status {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 0.25rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.card.is-filtered { display: none; }
 
 .search-form label {
   position: absolute;

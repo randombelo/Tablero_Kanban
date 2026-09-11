@@ -12,7 +12,7 @@
       "id": 2,
       "title": "Definir esquema de la base de datos",
       "description": "Modelar las colecciones de tareas, columnas y comentarios en json-server.",
-      "status": "done",
+      "status": "doing",
       "priority": "media",
       "dueDate": "2026-09-18"
     },
