@@ -1,7 +1,8 @@
 // --- Menú móvil ---
 const navToggleBtn = document.getElementById('nav-toggle-btn');
 const siteNav = document.querySelector('.site-nav');
-
+let comments = [];            // todas las comments (fuente en memoria)
+let currentCommentId = null; //current comment para eliminar
 navToggleBtn.addEventListener('click', () => {
   siteNav.classList.toggle('is-open');
 });
@@ -87,6 +88,12 @@ closeDeleteBtn.addEventListener('click', cancelDeletion);
 confirmDeleteBtn.addEventListener('click', async () => {
   if (!currentTaskId) return;
   await axios.delete(`${API_BASE}/tasks/${currentTaskId}`);
+  await Promise.all(
+    comments
+      .filter((c) => String(c.taskId) === String(currentTaskId))
+      .map((c) => axios.delete(`${API_BASE}/comments/${c.id}`))
+  );
+  comments = comments.filter((c) => String(c.taskId) !== String(currentTaskId));
   closeDeleteModal();
   const card = document.querySelector(`.card[data-id="${currentTaskId}"]`);
   if (card) card.remove();
@@ -111,7 +118,7 @@ function formatDate(dateStr) {
   return `${String(d.getDate()).padStart(2,'0')} ${months[d.getMonth()]}`;
 }
 
-function renderCard(task) {
+function renderCard(task,commentCount = 0) {
   const done = task.status === 'done';
   const priorityLabel = { alta: 'Alta', media: 'Media', baja: 'Baja' };
   const article = document.createElement('article');
@@ -123,7 +130,7 @@ function renderCard(task) {
     <footer class="card-meta">
       <span class="badge priority-${task.priority}">${priorityLabel[task.priority]}</span>
       <time datetime="${task.dueDate}">${formatDate(task.dueDate)}</time>
-      <span class="comment-count" title="Comentarios">💬 0</span>
+       <span class="comment-count" title="Comentarios">💬 ${commentCount}</span>
     </footer>`;
   return article;
 }
@@ -146,7 +153,14 @@ function renderBoard(tasks) {
     const status = col.dataset.status;
     const list = col.querySelector('.card-list');
     list.innerHTML = '';
-    tasks.filter(t => t.status === status).forEach(t => list.appendChild(renderCard(t)));
+    tasks
+      .filter((t) => t.status === status)
+      .forEach((t) => {
+        const count = comments.filter(
+          (c) => String(c.taskId) === String(t.id),
+        ).length;
+        list.appendChild(renderCard(t, count));
+      });
   });
   updateCounts(tasks);
   initSortable(); 
@@ -183,12 +197,16 @@ function makeSortable(list) {
     }
   });
 }
-
+//carga el tablero y los comentarios con axios
 async function fetchAndRender() {
-  const { data: tasks } = await axios.get(`${API_BASE}/tasks`);
+  const [{ data: tasks }, { data: commentsData }] = await Promise.all([
+    axios.get(`${API_BASE}/tasks`),
+    axios.get(`${API_BASE}/comments`)
+  ]);
+  comments = commentsData;
   renderBoard(tasks);
 }
-//funcion para crear tarjetas nuevas
+//Listener para crear tarjetas nuevas
 document.getElementById('new-task-form').addEventListener('submit', async (e) => {
   e.preventDefault();
   const nueva = {
@@ -207,7 +225,45 @@ document.getElementById('new-task-form').addEventListener('submit', async (e) =>
   makeSortable(todoList);
   refreshCounts();
 });
-
+//funcion que inserta en el modal de detalle algun comentario asociado a la tarea
+function renderComment(comment) {
+  const article = document.createElement('article');
+  article.className = 'comment';
+  article.dataset.id = comment.id;
+  article.innerHTML = `
+    <div class="comment-head">
+      <p class="comment-author">${comment.author}</p>
+      <button type="button" class="comment-delete-btn" data-id="${comment.id}" aria-label="Eliminar comentario">🗑</button>
+    </div>
+    <p class="comment-text">${comment.text}</p>`;
+  return article;
+}
+//funcion que carga todos los comentarios en el modal de detalle 
+function loadComments(taskId) {
+  const list = document.getElementById('comment-list');
+  list.innerHTML = '';
+  comments
+    .filter(c => String(c.taskId) === String(taskId))
+    .forEach(c => list.appendChild(renderComment(c)));
+}
+//Listener para crear un comentario nuevo
+document.getElementById('comment-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const input = document.getElementById('new-comment');
+  const text = input.value.trim();
+  if (!text || !currentTaskId) return;
+  const nuevo = {
+    taskId: Number(currentTaskId),
+    author: 'Abel',
+    text,
+    createdAt: new Date().toISOString()
+  };
+  const { data: commentCreado } = await axios.post(`${API_BASE}/comments`, nuevo);
+  comments.push(commentCreado);
+  document.getElementById('comment-list').appendChild(renderComment(commentCreado));
+  input.value = '';
+  updateCardCommentCount();
+});
 // ===== Modal de detalle (delegación de eventos) =====
 document.querySelector('.board').addEventListener('click', (e) => {
   const title = e.target.closest('.card-title.clickable');
@@ -215,6 +271,7 @@ document.querySelector('.board').addEventListener('click', (e) => {
   const card = title.closest('.card');
   currentTaskId = card.dataset.id; 
   openDetailModal(title.textContent, card.querySelector('.card-desc').textContent);
+  loadComments(currentTaskId);
 });
 //Listener para guardar cambios de una edicion.
 document.getElementById('detail-form').addEventListener('submit', async (e) => {
@@ -233,6 +290,50 @@ document.getElementById('detail-form').addEventListener('submit', async (e) => {
     card.querySelector('.card-title').textContent = nuevoTitle;
     card.querySelector('.card-desc').textContent = nuevoDesc;
   }
+});
+//Abre el modal de confirmacion al pulsar la papelera de un comentario
+document.getElementById('comment-list').addEventListener('click', (e) => {
+  const btn = e.target.closest('.comment-delete-btn');
+  if (!btn) return;
+  const commentEl = btn.closest('.comment');
+  currentCommentId = commentEl.dataset.id;
+  commentDeleteAuthor.textContent = commentEl.querySelector('.comment-author').textContent;
+  commentDeleteOverlay.classList.add('is-open');
+});
+//obtiene las referencias del modal
+const commentDeleteOverlay = document.querySelector('.overlay-comment-delete');
+const closeCommentDeleteBtn = document.getElementById('close-comment-delete');
+const cancelCommentDeleteBtn = document.getElementById('cancel-comment-delete');
+const confirmCommentDeleteBtn = document.getElementById('confirm-comment-delete');
+const commentDeleteAuthor = document.getElementById('comment-delete-author');
+//funcion que cierra el modal de confirmacion de eliminacion 
+function closeCommentDeleteModal() {
+  currentCommentId = null;
+  commentDeleteOverlay.classList.remove('is-open');
+}
+//listener de botones de cerrar y cancelar la operacion
+closeCommentDeleteBtn.addEventListener('click', closeCommentDeleteModal);
+cancelCommentDeleteBtn.addEventListener('click', closeCommentDeleteModal);
+
+commentDeleteOverlay.addEventListener('click', (e) => {
+  if (e.target === commentDeleteOverlay) closeCommentDeleteModal();
+});
+//funcion que actualiza el contador de los comentarios en la tarjeta.
+function updateCardCommentCount() {
+  if (!currentTaskId) return;
+  const count = comments.filter((c) => String(c.taskId) === String(currentTaskId)).length;
+  const span = document.querySelector(`.card[data-id="${currentTaskId}"] .comment-count`);
+  if (span) span.textContent = `💬 ${count}`;
+}
+//listener para confirmar la eliminacion de un comentario
+confirmCommentDeleteBtn.addEventListener('click', async () => {
+  if (!currentCommentId) return;
+  await axios.delete(`${API_BASE}/comments/${currentCommentId}`);
+  document.querySelector(`#comment-list .comment[data-id="${currentCommentId}"]`).remove();
+  comments = comments.filter((c) => String(c.id) !== String(currentCommentId));
+  currentCommentId = null;
+  closeCommentDeleteModal();
+  updateCardCommentCount();
 });
 
 // ===== Inicio =====

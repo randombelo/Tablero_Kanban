@@ -34,12 +34,28 @@
     },
     {
       "id": 8,
-      "title": "Elegir paleta de color oscura",
+      "title": "Elegir paleta de color oscura editado",
       "description": "Definir tokens de color inspirados en GitHub Projects.",
-      "status": "doing",
+      "status": "done",
       "priority": "baja",
       "dueDate": "2026-09-06"
+    },
+    {
+      "title": "ejemplo",
+      "description": "ejemplo",
+      "priority": "media",
+      "dueDate": null,
+      "status": "todo",
+      "id": 9
     }
   ],
-  "comments": []
+  "comments": [
+    {
+      "taskId": 8,
+      "author": "Abel",
+      "text": "Hola mundo",
+      "createdAt": "2026-09-11T15:00:12.320Z",
+      "id": 1
+    }
+  ]
 }

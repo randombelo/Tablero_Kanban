@@ -311,7 +311,14 @@ button, input, select, textarea, label { font-family: inherit; font-size: inheri
 .priority-baja { background: rgba(63, 185, 80, 0.15); color: var(--priority-baja); }
 .priority-media { background: rgba(210, 153, 34, 0.15); color: var(--priority-media); }
 .priority-alta { background: rgba(248, 81, 73, 0.15); color: var(--priority-alta); }
-
+.card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-height: 2rem;
+}
+.card.sortable-ghost { opacity: 0.4; }
+.card.sortable-chosen { box-shadow: 0 0 0 2px var(--accent); }
 /* ===================== Modales (nueva tarea / detalle) ===================== */
 
 
@@ -444,6 +451,32 @@ button, input, select, textarea, label { font-family: inherit; font-size: inheri
 }
 
 .comment-form .btn { align-self: flex-end; }
+.comment-list { display: flex; flex-direction: column; gap: 0.35rem; }
+
+.comment-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.comment-delete-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: var(--radius);
+  transition: color 0.2s, background 0.2s;
+}
+
+.comment-delete-btn:hover {
+  color: var(--priority-alta);
+  background: rgba(248, 81, 73, 0.1);
+}
+
+.overlay-comment-delete.is-open { display: flex; }
 
 /* ===================== Responsive ===================== */
 
@@ -497,11 +530,4 @@ button, input, select, textarea, label { font-family: inherit; font-size: inheri
 
   .search-form { max-width: none; }
 }
-.card-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  min-height: 2rem;
-}
-.card.sortable-ghost { opacity: 0.4; }
-.card.sortable-chosen { box-shadow: 0 0 0 2px var(--accent); }
+
