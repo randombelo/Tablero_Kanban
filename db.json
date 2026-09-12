@@ -2,7 +2,7 @@
   "tasks": [
     {
       "id": 1,
-      "title": "Diseñar wireframes del dashboard",
+      "title": "Diseñar wireframes del dashboard. Dificil",
       "description": "Bocetar la distribución de columnas y tarjetas antes de maquetar la interfaz.",
       "status": "todo",
       "priority": "alta",
@@ -12,7 +12,7 @@
       "id": 2,
       "title": "Definir esquema de la base de datos",
       "description": "Modelar las colecciones de tareas, columnas y comentarios en json-server.",
-      "status": "todo",
+      "status": "doing",
       "priority": "media",
       "dueDate": "2026-09-18"
     },
@@ -28,7 +28,7 @@
       "id": 6,
       "title": "Configurar json-server",
       "description": "Levantar el servidor local con el archivo db.json inicial.",
-      "status": "done",
+      "status": "doing",
       "priority": "baja",
       "dueDate": "2026-09-05"
     },
@@ -39,14 +39,6 @@
       "status": "done",
       "priority": "baja",
       "dueDate": "2026-09-06"
-    },
-    {
-      "title": "ejemplo",
-      "description": "ejemplo",
-      "priority": "media",
-      "dueDate": null,
-      "status": "doing",
-      "id": 9
     }
   ],
   "comments": [
@@ -58,11 +50,11 @@
       "id": 1
     },
     {
-      "taskId": 9,
+      "taskId": 1,
       "author": "Abel",
-      "text": "ejemplo de comentario",
-      "createdAt": "2026-09-11T20:53:12.083Z",
-      "id": 2
+      "text": "Esta tarea esta dificil",
+      "createdAt": "2026-09-12T10:20:22.427Z",
+      "id": 4
     }
   ]
 }
