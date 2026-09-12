@@ -193,6 +193,7 @@ function makeSortable(list) {
     onEnd: async (evt) => {
       const cardId = evt.item.dataset.id;
       const newStatus = evt.to.closest('.column').dataset.status;
+      evt.item.classList.toggle('is-done', newStatus === 'done');
       await axios.patch(`${API_BASE}/tasks/${cardId}`, { status: newStatus });
       refreshCounts();
     }

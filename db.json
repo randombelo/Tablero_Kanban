@@ -12,7 +12,7 @@
       "id": 2,
       "title": "Definir esquema de la base de datos",
       "description": "Modelar las colecciones de tareas, columnas y comentarios en json-server.",
-      "status": "doing",
+      "status": "todo",
       "priority": "media",
       "dueDate": "2026-09-18"
     },
@@ -20,7 +20,7 @@
       "id": 4,
       "title": "Implementar drag & drop entre columnas",
       "description": "Integrar SortableJS y disparar el PATCH al soltar la tarjeta.",
-      "status": "doing",
+      "status": "done",
       "priority": "alta",
       "dueDate": "2026-09-12"
     },
@@ -45,7 +45,7 @@
       "description": "ejemplo",
       "priority": "media",
       "dueDate": null,
-      "status": "todo",
+      "status": "doing",
       "id": 9
     }
   ],
@@ -56,6 +56,13 @@
       "text": "Hola mundo",
       "createdAt": "2026-09-11T15:00:12.320Z",
       "id": 1
+    },
+    {
+      "taskId": 9,
+      "author": "Abel",
+      "text": "ejemplo de comentario",
+      "createdAt": "2026-09-11T20:53:12.083Z",
+      "id": 2
     }
   ]
 }
