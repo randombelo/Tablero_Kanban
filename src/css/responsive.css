@@ -7,31 +7,6 @@
 }
 
 @media (max-width: 720px) {
-  .hamburger { display: flex; }
-
-  .site-nav {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 0.5rem 1.5rem 1rem;
-  }
-
-  .site-nav.is-open { display: block; } 
-
-  .site-nav ul {
-    flex-direction: column;
-    gap: 0.25rem;
-  }
-
-  .site-nav a {
-    display: block;
-    padding: 0.5rem 0;
-  }
-
   .stats-bar {
     flex-wrap: wrap;
     gap: 0.75rem;
