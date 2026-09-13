@@ -2,7 +2,7 @@
   "tasks": [
     {
       "id": 1,
-      "title": "Diseñar wireframes del dashboard. Dificil",
+      "title": "Diseñar wireframes del dashboard.",
       "description": "Bocetar la distribución de columnas y tarjetas antes de maquetar la interfaz.",
       "status": "todo",
       "priority": "alta",
@@ -12,7 +12,7 @@
       "id": 2,
       "title": "Definir esquema de la base de datos",
       "description": "Modelar las colecciones de tareas, columnas y comentarios en json-server.",
-      "status": "doing",
+      "status": "todo",
       "priority": "media",
       "dueDate": "2026-09-18"
     },
@@ -34,19 +34,11 @@
     },
     {
       "id": 8,
-      "title": "Elegir paleta de color oscura editado",
+      "title": "Elegir paleta de color oscura.",
       "description": "Definir tokens de color inspirados en GitHub Projects.",
       "status": "doing",
       "priority": "baja",
       "dueDate": "2026-09-06"
-    },
-    {
-      "title": "sdfsdf",
-      "description": "",
-      "priority": "media",
-      "dueDate": null,
-      "status": "todo",
-      "id": 9
     }
   ],
   "comments": [
@@ -63,6 +55,13 @@
       "text": "Esta tarea esta dificil",
       "createdAt": "2026-09-12T10:20:22.427Z",
       "id": 4
+    },
+    {
+      "taskId": 8,
+      "author": "Abel",
+      "text": "Esta tarea es nueva",
+      "createdAt": "2026-09-13T10:38:37.304Z",
+      "id": 5
     }
   ]
 }
