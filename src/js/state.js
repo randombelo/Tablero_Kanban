@@ -3,4 +3,4 @@ export const state = {
   currentTaskId: null,
   currentCommentId: null
 };
-export const API_BASE = 'https://tablero-kanbanrandombelo.onrender.com/';
+export const API_BASE = 'https://tablero-kanbanrandombelo.onrender.com';
