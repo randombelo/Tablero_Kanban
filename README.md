@@ -5,6 +5,7 @@ Panel Kanban para la organización de tareas de desarrolladores web. Proyecto de
 🔗 **Sitio en producción:** _[https://randombelo.github.io/Tablero_Kanban/]_
 📦 **Repositorio:** _[https://github.com/randombelo/Tablero_Kanban]_
 **Backend en render:**_[https://tablero-kanbanrandombelo.onrender.com/]_
+**Diseño en Sttich:**_[https://stitch.withgoogle.com/projects/18426646002164002808]_
 
 ---
 
