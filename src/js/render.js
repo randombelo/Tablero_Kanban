@@ -6,6 +6,15 @@ export function formatDate(dateStr) {
   const months = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
   return `${String(d.getDate()).padStart(2,'0')} ${months[d.getMonth()]}`;
 }
+//funcion que previene inyeccion de codigo 
+function escapeHTML(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
 //refleja la tarjeta en el DOM
 export function renderCard(task,commentCount = 0) {
   const done = task.status === 'done';
@@ -14,11 +23,11 @@ export function renderCard(task,commentCount = 0) {
   article.className = `card${done ? ' is-done' : ''}`;
   article.dataset.id = task.id;
   article.innerHTML = `
-    <p class="card-title clickable">${task.title}</p>
-    <p class="card-desc">${task.description}</p>
+    <p class="card-title clickable">${escapeHTML(task.title)}</p>
+    <p class="card-desc">${escapeHTML(task.description)}</p>
     <footer class="card-meta">
       <span class="badge priority-${task.priority}">${priorityLabel[task.priority]}</span>
-      <time datetime="${task.dueDate}">${formatDate(task.dueDate)}</time>
+      <time datetime="${escapeHTML(task.dueDate)}">${formatDate(task.dueDate)}</time>
        <span class="comment-count" title="Comentarios">💬 ${commentCount}</span>
     </footer>`;
   return article;
@@ -55,10 +64,10 @@ export function renderComment(comment) {
   article.dataset.id = comment.id;
   article.innerHTML = `
     <div class="comment-head">
-      <p class="comment-author">${comment.author}</p>
+      <p class="comment-author">${escapeHTML(comment.author)}</p>
       <button type="button" class="comment-delete-btn" data-id="${comment.id}" aria-label="Eliminar comentario">🗑</button>
     </div>
-    <p class="comment-text">${comment.text}</p>`;
+    <p class="comment-text">${escapeHTML(comment.text)}</p>`;
   return article;
 }
 //Funcion que carga el tablero
