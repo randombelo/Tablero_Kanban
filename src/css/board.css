@@ -1,0 +1,101 @@
+/* ===================== Tablero Kanban ===================== */
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(280px, 1fr));
+  gap: 1rem;
+  padding: 0 1.5rem 2rem;
+  align-items: start;
+}
+
+.column {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.column-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.25rem 0.25rem 0.75rem;
+  border-bottom: 2px solid var(--border);
+}
+
+.column[data-status="todo"] .column-header { border-bottom-color: var(--status-todo); }
+.column[data-status="doing"] .column-header { border-bottom-color: var(--status-doing); }
+.column[data-status="done"] .column-header { border-bottom-color: var(--status-done); }
+
+.column-header h2 { font-size: 0.95rem; }
+
+.count {
+  background: var(--surface-alt);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+  padding: 0.1rem 0.55rem;
+  border-radius: 999px;
+}
+/* ===================== Tarjetas ===================== */
+
+.card {
+  display: block;
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.75rem;
+  cursor: grab;
+}
+
+.card:hover { border-color: var(--accent); }
+
+.card.is-done { opacity: 0.75; }
+
+.card-title {
+  display: block;
+  margin: 0 0 0.35rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.card-title:hover { color: var(--accent); text-decoration: none; }
+
+.card-desc {
+  margin: 0 0 0.75rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.card-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.card-meta time { margin-right: auto; }
+
+.badge {
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.priority-baja { background: rgba(63, 185, 80, 0.15); color: var(--priority-baja); }
+.priority-media { background: rgba(210, 153, 34, 0.15); color: var(--priority-media); }
+.priority-alta { background: rgba(248, 81, 73, 0.15); color: var(--priority-alta); }
+.card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-height: 2rem;
+}
+.card.sortable-ghost { opacity: 0.4; }
+.card.sortable-chosen { box-shadow: 0 0 0 2px var(--accent); }
