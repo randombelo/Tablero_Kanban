@@ -2,7 +2,7 @@
   "name": "tablero-kanban",
   "version": "1.0.0",
   "scripts": {
-    "start": "json-server db.json -p 3000"
+    "start": "node server.js"
   },
   "devDependencies": {
     "json-server": "^0.17.4"
