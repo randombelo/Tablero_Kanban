@@ -3,4 +3,4 @@ export const state = {
   currentTaskId: null,
   currentCommentId: null
 };
-export const API_BASE = 'http://localhost:3000';
+export const API_BASE = 'https://my-json-server.typicode.com/randombelo/Tablero_Kanban';
