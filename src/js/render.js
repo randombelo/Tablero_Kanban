@@ -1,4 +1,6 @@
 import { state } from './state.js';
+import { filterTasksByStatus,filterCommentsByTask } from './utils.js';
+
 //hace mas legible la fecha
 export function formatDate(dateStr) {
   if (!dateStr) return '';
@@ -76,12 +78,9 @@ export function renderBoard(tasks) {
     const status = col.dataset.status;
     const list = col.querySelector('.card-list');
     list.innerHTML = '';
-    tasks
-      .filter((t) => t.status === status)
+    filterTasksByStatus(tasks, status)
       .forEach((t) => {
-        const count = state.comments.filter(
-          (c) => String(c.taskId) === String(t.id),
-        ).length;
+        const count =filterCommentsByTask(state.comments, t.id).length
         list.appendChild(renderCard(t, count));
       });
   });
@@ -91,14 +90,13 @@ export function renderBoard(tasks) {
 export function loadComments(taskId) {
   const list = document.getElementById('comment-list');
   list.innerHTML = '';
-  state.comments
-    .filter(c => String(c.taskId) === String(taskId))
+  filterCommentsByTask(state.comments, taskId)
     .forEach(c => list.appendChild(renderComment(c)));
 }
 //funcion que actualiza el contador de los comentarios en la tarjeta.
 export function updateCardCommentCount() {
   if (!state.currentTaskId) return;
-  const count = state.comments.filter((c) => String(c.taskId) === String(state.currentTaskId)).length;
+  const count = filterCommentsByTask(state.comments, state.currentTaskId).length;
   const span = document.querySelector(`.card[data-id="${state.currentTaskId}"] .comment-count`);
   if (span) span.textContent = `💬 ${count}`;
 }

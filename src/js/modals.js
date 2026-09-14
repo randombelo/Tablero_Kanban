@@ -3,6 +3,7 @@ import { createTask, updateTask, deleteTask, createComment, deleteComment } from
 import { renderCard, renderComment, loadComments, updateCardCommentCount, refreshCounts } from './render.js';
 import { makeSortable }                from './drag.js';
 import { applySearchFilter }           from './search.js';
+import { filterCommentsByTask,validateNewTask } from './utils.js';
 // --- Modal: nueva tarea ---
 const openNewTaskBtn = document.getElementById('open-new-task');
 const newTaskOverlay = document.querySelector('.overlay-new-task');
@@ -76,9 +77,8 @@ confirmDeleteBtn.addEventListener('click', async () => {
   if (!state.currentTaskId) return;
   await deleteTask(state.currentTaskId);
   await Promise.all(
-    state.comments
-      .filter((c) => String(c.taskId) === String(state.currentTaskId))
-      .map((c) => deleteComment(c.id))
+    filterCommentsByTask(state.comments, state.currentTaskId)
+    .map((c) => deleteComment(c.id))
   );
   state.comments = state.comments.filter((c) => String(c.taskId) !== String(state.currentTaskId));
   closeDeleteModal();
@@ -103,8 +103,9 @@ document.getElementById('new-task-form').addEventListener('submit', async (e) =>
     dueDate: document.getElementById('task-due').value || null,
     status: 'todo'
   };
-  if (!nueva.title) return;
-  const { data: taskCreada } = await createTask(nueva);
+ const { isValid, task: validada } = validateNewTask(nueva); 
+ if (!isValid) return;
+  const { data: taskCreada } = await createTask(validada);
   e.target.reset();
   closeNewTaskModal();
   const todoList = document.querySelector('[data-status="todo"] .card-list');
